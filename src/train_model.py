@@ -14,7 +14,7 @@ from sklearn.metrics import (
 # -----------------------------
 # 1. Load dataset
 # -----------------------------
-data = pd.read_csv("features_dataset.csv")
+data = pd.read_csv("data/features_dataset.csv")
 
 # Remove rows with missing labels
 data = data.dropna(subset=["UPDRS_label"])
@@ -63,23 +63,23 @@ print("Testing unique IDs:", id_test.nunique())
 # -----------------------------
 # 4. Save clean split files WITH ID
 # -----------------------------
-train_split = pd.concat(
+train_data = pd.concat(
     [id_train.reset_index(drop=True),
      X_train.reset_index(drop=True),
      y_train.reset_index(drop=True)],
     axis=1
 )
-train_split.columns = ["ID"] + list(X.columns) + ["UPDRS_label"]
-train_split.to_csv("train_data.csv", index=False)
+train_data.columns = ["ID"] + list(X.columns) + ["UPDRS_label"]
+train_data.to_csv("data/train_data.csv", index=False)
 
 # Test split without prediction first
-test_split = pd.concat(
+test_data = pd.concat(
     [id_test.reset_index(drop=True),
      X_test.reset_index(drop=True),
      y_test.reset_index(drop=True)],
     axis=1
 )
-test_split.columns = ["ID"] + list(X.columns) + ["UPDRS_label"]
+test_data.columns = ["ID"] + list(X.columns) + ["UPDRS_label"]
 
 # -----------------------------
 # 5. Train model
@@ -93,8 +93,8 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 # Add ML prediction to test split
-test_split["ML_prediction"] = y_pred
-test_split.to_csv("test_data.csv", index=False)
+test_data["ML_prediction"] = y_pred
+test_data.to_csv("data/test_data.csv", index=False)
 
 # -----------------------------
 # 7. Evaluate
@@ -111,8 +111,8 @@ print(cm)
 # -----------------------------
 # 8. Save model
 # -----------------------------
-joblib.dump(model, "parkinsons_severity_model.pkl")
-print("\nModel saved as parkinsons_severity_model.pkl")
+joblib.dump(model, "model/parkinsons_severity_model.pkl")
+print("\nModel saved as model/parkinsons_severity_model.pkl")
 print("Saved train_data.csv and test_data.csv")
 
 # -----------------------------
@@ -120,7 +120,7 @@ print("Saved train_data.csv and test_data.csv")
 # -----------------------------
 ConfusionMatrixDisplay.from_predictions(y_test, y_pred)
 plt.title("ML Confusion Matrix")
-plt.savefig("ml_confusion_matrix.png", dpi=300, bbox_inches="tight")
+plt.savefig("results/ml_confusion_matrix.png", dpi=300, bbox_inches="tight")
 plt.show()
 
 # -----------------------------
@@ -174,5 +174,5 @@ table.auto_set_font_size(False)
 table.set_fontsize(12)
 table.scale(1, 1.4)
 
-plt.savefig("ml_results_summary.png", dpi=300, bbox_inches="tight")
+plt.savefig("results/ml_results_summary.png", dpi=300, bbox_inches="tight")
 plt.show()

@@ -8,7 +8,7 @@ import numpy as np
 import joblib
 from datetime import datetime
 
-model = joblib.load("parkinsons_severity_model.pkl")
+model = joblib.load("model/parkinsons_severity_model.pkl")
 
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
@@ -116,7 +116,7 @@ def save_session_to_csv(timestamp, taps, speed_value, updrs_score, video_file):
         ])
 
 def save_features_to_csv(video_id, distances, taps, speed_value, updrs_score, ml_prediction):
-    features_file = "features_dataset.csv"
+    features_file = "data/features_dataset.csv"
     file_exists = os.path.isfile(features_file)
 
     dist = np.array(distances)
@@ -277,7 +277,7 @@ while True:
                 print("Recording Stopped Automatically")
 
             print("Session Finished and Saved to CSV")
-            print("Features Saved to features_dataset.csv")
+            print("Features Saved to data/features_dataset.csv")
             print(f"ML Predicted Severity: {ml_prediction}")
 
     status = "RUNNING" if running else "PAUSED"

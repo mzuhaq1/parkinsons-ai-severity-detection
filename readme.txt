@@ -1,43 +1,52 @@
-Parkinson’s AI Detection System
+# Parkinson’s AI Severity Detection System
 
-This project uses Computer Vision and Machine Learning to analyse finger tapping movements and predict Parkinson’s severity (UPDRS score).
+## Overview
+This project uses Computer Vision and Machine Learning to analyse hand movement patterns and predict Parkinson’s disease severity based on UPDRS scores.
 
-Requirements:
-- Python 3.11
+---
 
-Setup:
-1. Create virtual environment:
-   py -3.11 -m venv mp_env
+## System Pipeline
+Video Input → Hand Tracking (MediaPipe / YOLO) → Feature Extraction → Machine Learning Model → Severity Prediction
 
-2. Activate:
-   mp_env\Scripts\activate
+---
 
-3. Install dependencies:
-   pip install -r requirements.txt
+## Features Extracted
+- Mean Distance
+- Standard Deviation
+- Coefficient of Variation
+- Max/Min Distance
+- Range
+- Slowing Index
+- Tap Count
+- Tap Frequency
 
-Run:
-python parkinson_detection_demo.py
+---
 
-Controls:
-S = Start
-R = Reset
-V = Record
-Q = Quit
+## Machine Learning Model
+- Model: Random Forest Classifier
+- Training/Test Split: 80/20
+- Accuracy: **0.95**
+- Weighted F1 Score: **0.95**
 
-Pipeline:
-1. Video/Webcam Input
-2. Hand Detection (YOLO + MediaPipe)
-3. Feature Extraction (tap count, speed, distance)
-4. Dataset Creation
-5. Machine Learning Model (Random Forest)
-6. Severity Prediction
+---
 
-Results:
-- Accuracy: 95%
-- F1 Score: 0.95
+## Evaluation
+- Confusion Matrix used for performance analysis
+- Strong classification across all UPDRS levels
+- Minor misclassification between adjacent severity levels
 
-Files:
-- train_data.xlsx → training dataset
-- test_data.xlsx → testing dataset
-- parkinson_model.pkl → trained model
-- ml_confusion_matrix.png → evaluation
+---
+
+## Data Leakage Prevention
+GroupShuffleSplit was used to ensure that samples from the same participant (ID) do not appear in both training and testing datasets.
+
+---
+
+## Demo Application
+- Real-time hand tracking
+- Feature extraction from finger tapping movement
+- Live prediction of Parkinson’s severity
+
+---
+
+## Project Structure

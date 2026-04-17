@@ -50,3 +50,34 @@ GroupShuffleSplit was used to ensure that samples from the same participant (ID)
 ---
 
 ## Project Structure
+
+data/ → datasets
+model/ → trained ML model
+results/ → evaluation outputs
+src/ → main scripts
+
+
+---
+
+## How to Run
+
+### Install dependencies
+
+pip install -r requirements.txt
+
+
+### Train model
+
+python src/train_model.py
+
+
+### Run demo
+
+python src/parkinson_detection_demo.py
+
+
+---
+
+## Author
+Muhammad Zain Ul Haq
+
